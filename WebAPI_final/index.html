@@ -1,0 +1,730 @@
+﻿<!doctype html>
+<html ng-app="myApp">
+<head>
+    <title>xDatafiOnline</title>
+    <link href="css/angular-datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+    <link href="css/xdatafi.css" rel="stylesheet" type="text/css" />
+    <link href="css/table.css" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/angular-datepicker.js"></script>
+</head>
+<body>
+
+
+    <div ng-controller="MenuController">
+        <h1>xDatafi Online</h1>
+        <div id="control">
+
+            <nav>
+                <ul>
+
+                    <li><a ng-click="vstock()">Asset</a></li>
+                    <li><a ng-click="vexchange()">Exchange</a></li>
+                    <li><a ng-click="vinterest()">Interest</a></li>
+                    <li><a ng-click="vxml()">Import XML File</a></li>
+
+                </ul>
+            </nav>
+
+
+            <div ng-controller="StockController">
+                <div ng-show="menu.s">
+                    <h2>{{menu.res}}</h2>
+                    <br />
+                    <br />
+                    <div id="stock">
+                        <label>
+                            Asset (Names from Yahoo Finance):
+                            <input type="text" name="lastName" ng-model="stock" class="resizedTextbox">
+                        </label>
+                    </div>
+                    <br />
+                    <div id="stock">
+                        <label ng-repeat="option in options">
+                            <input class="checkbox"
+                                   type="checkbox"
+                                   name="selectedOptions[]"
+                                   value="{{options}}"
+                                   ng-checked="selectedOptions.indexOf(option) > -1"
+                                   ng-click="toggleSelection(option)"> {{option}}
+
+                        </label>
+                    </div>
+                    <br />
+
+                    <!--<datepicker date-format="yyyy-MM-dd">
+                        Start Date <input ng-model="start" type="text" placeholder="yyyy-MM-dd">
+                    </datepicker>
+                    voici {{start}}
+                    <datepicker date-format="yyyy-MM-dd">
+                        End Date <input ng-model="end" type="text" placeholder="yyyy-MM-dd">
+                    </datepicker>
+                    -->
+                    <div id="stock">
+                        Start Date <input ng-model="start" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+
+                        End Date <input ng-model="end" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+
+                    </div>
+                    <br />
+                    <br />
+                    
+                    <p id="stock">
+                        <button ng-click="search()" class="button" style="width:130px; height: 35px">Search</button>
+                    </p>
+                    <div ng-show="staterreurs" class="inputError">
+                        Erreur: {{erreurs}}
+                    </div>
+                    <div ng-show="status">
+                        <p class="warning">Warning:</p>
+                        <div ng-repeat="war in data.warning ">
+                            {{war}}
+                        </div>
+                        <p class="errrors">Erreur:</p>
+                        <div ng-repeat="err in data.listeErreur ">
+                            {{err}}
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Asset</th>
+                                <th>Date</th>
+                                <th>Open</th>
+                                <th>High</th>
+                                <th>Low</th>
+                                <th>Close</th>
+                                <th>Volume</th>
+                            </tr>
+                            <tr ng-repeat="x in data.data.Ds.Table1">
+                                <td>{{ x.Symbol }}</td>
+                                <td>{{ x.Date |date:'yyyy-MM-dd' }}</td>
+                                <td>{{ x.Open }}</td>
+                                <td>{{ x.High }}</td>
+                                <td>{{ x.Low }}</td>
+                                <td>{{ x.Close }}</td>
+                                <td>{{ x.Volume }}</td>
+                            </tr>
+                        </table>
+
+
+                        <a download="Data.json" ng-href="{{ url }}">Télécharger les données au format Json</a>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div ng-controller="ExchangeController">
+                <div ng-show="menu.e">
+                    <h2>{{menu.res}}</h2>
+                    <br />
+                    <br />
+                    <div id="stock">
+                        Reference Currency:
+
+
+                        <select ng-model="refCur" class="resizedTextbox">
+                            <option value="ADF">ADF</option>
+                            <option value="ADP">ADP</option>
+                            <option value="AED">AED</option>
+                            <option value="AFA">AFA</option>
+                            <option value="AFN">AFN</option>
+                            <option value="AFR">AFR</option>
+                            <option value="ALL">ALL</option>
+                            <option value="AMD">AMD</option>
+                            <option value="ANG">ANG</option>
+                            <option value="AOA">AOA</option>
+                            <option value="AON">AON</option>
+                            <option value="ARS">ARS</option>
+                            <option value="ATS">ATS</option>
+                            <option value="AUD">AUD</option>
+                            <option value="AWF">AWF</option>
+                            <option value="AWG">AWG</option>
+                            <option value="AZM">AZM</option>
+                            <option value="AZN">AZN</option>
+                            <option value="BAM">BAM</option>
+                            <option value="BBD">BBD</option>
+                            <option value="BDT">BDT</option>
+                            <option value="BEF">BEF</option>
+                            <option value="BGL">BGL</option>
+                            <option value="BGN">BGN</option>
+                            <option value="BHD">BHD</option>
+                            <option value="BIF">BIF</option>
+                            <option value="BMD">BMD</option>
+                            <option value="BND">BND</option>
+                            <option value="BOB">BOB</option>
+                            <option value="BRL">BRL</option>
+                            <option value="BSD">BSD</option>
+                            <option value="BTN">BTN</option>
+                            <option value="BWP">BWP</option>
+                            <option value="BYR">BYR</option>
+                            <option value="BZD">BZD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CDF">CDF</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CLP">CLP</option>
+                            <option value="CNY">CNY</option>
+                            <option value="COP">COP</option>
+                            <option value="CRS">CRS</option>
+                            <option value="CUC">CUC</option>
+                            <option value="CUP">CUP</option>
+                            <option value="CVE">CVE</option>
+                            <option value="CYP">CYP</option>
+                            <option value="CZK">CZK</option>
+                            <option value="DEM">DEM</option>
+                            <option value="DIF">DIF</option>
+                            <option value="DKK">DKK</option>
+                            <option value="DOP">DOP</option>
+                            <option value="DZF">DZF</option>
+                            <option value="ECS">ECS</option>
+                            <option value="EEK">EEK</option>
+                            <option value="EGP">EGP</option>
+                            <option value="ERN">ERN</option>
+                            <option value="ESP">ESP</option>
+                            <option value="ETD">ETD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="FIM">FIM</option>
+                            <option value="FJD">FJD</option>
+                            <option value="FKP">FKP</option>
+                            <option value="GBP">GBP</option>
+                            <option value="GEL">GEL</option>
+                            <option value="GGP">GGP</option>
+                            <option value="GHC">GHC</option>
+                            <option value="GHS">GHS</option>
+                            <option value="GIP">GIP</option>
+                            <option value="GMP">GMP</option>
+                            <option value="GNF">GNF</option>
+                            <option value="GRD">GRD</option>
+                            <option value="GTQ">GTQ</option>
+                            <option value="GYD">GYD</option>
+                            <option value="HKD">HKD</option>
+                            <option value="HNL">HNL</option>
+                            <option value="HRK">HRK</option>
+                            <option value="HTG">HTG</option>
+                            <option value="HUF">HUF</option>
+                            <option value="IDR">IDR</option>
+                            <option value="IEP">IEP</option>
+                            <option value="ILS">ILS</option>
+                            <option value="IMP">IMP</option>
+                            <option value="INR">INR</option>
+                            <option value="IQD">IQD</option>
+                            <option value="IRR">IRR</option>
+                            <option value="ISK">ISK</option>
+                            <option value="ITL">ITL</option>
+                            <option value="JEP">JEP</option>
+                            <option value="JMP">JMP</option>
+                            <option value="JOD">JOD</option>
+                            <option value="JPY">JPY</option>
+                            <option value="KES">KES</option>
+                            <option value="KGS">KGS</option>
+                            <option value="KHR">KHR</option>
+                            <option value="KMF">KMF</option>
+                            <option value="KPW">KPW</option>
+                            <option value="KRW">KRW</option>
+                            <option value="KWD">KWD</option>
+                            <option value="KYD">KYD</option>
+                            <option value="KZT">KZT</option>
+                            <option value="LAK">LAK</option>
+                            <option value="LBP">LBP</option>
+                            <option value="LKR">LKR</option>
+                            <option value="LRD">LRD</option>
+                            <option value="LSL">LSL</option>
+                            <option value="LTL">LTL</option>
+                            <option value="LUF">LUF</option>
+                            <option value="LVL">LVL</option>
+                            <option value="LYD">LYD</option>
+                            <option value="MAD">MAD</option>
+                            <option value="MDL">MDL</option>
+                            <option value="MGA">MGA</option>
+                            <option value="MGF">MGF</option>
+                            <option value="MKD">MKD</option>
+                            <option value="MMK">MMK</option>
+                            <option value="MNT">MNT</option>
+                            <option value="MOP">MOP</option>
+                            <option value="MRO">MRO</option>
+                            <option value="MTL">MTL</option>
+                            <option value="MUR">MUR</option>
+                            <option value="MVR">MVR</option>
+                            <option value="MWK">MWK</option>
+                            <option value="MXN">MXN</option>
+                            <option value="MYR">MYR</option>
+                            <option value="MZM">MZM</option>
+                            <option value="MZN">MZN</option>
+                            <option value="NAD">NAD</option>
+                            <option value="NGN">NGN</option>
+                            <option value="NIO">NIO</option>
+                            <option value="NLG">NLG</option>
+                            <option value="NOK">NOK</option>
+                            <option value="NPR">NPR</option>
+                            <option value="NTD">NTD</option>
+                            <option value="NZD">NZD</option>
+                            <option value="OMR">OMR</option>
+                            <option value="PAB">PAB</option>
+                            <option value="PEN">PEN</option>
+                            <option value="PGK">PGK</option>
+                            <option value="PHP">PHP</option>
+                            <option value="PKR">PKR</option>
+                            <option value="PLN">PLN</option>
+                            <option value="PSL">PSL</option>
+                            <option value="PTE">PTE</option>
+                            <option value="PYG">PYG</option>
+                            <option value="QAR">QAR</option>
+                            <option value="ROL">ROL</option>
+                            <option value="RON">RON</option>
+                            <option value="RSD">RSD</option>
+                            <option value="RUB">RUB</option>
+                            <option value="RWF">RWF</option>
+                            <option value="SAR">SAR</option>
+                            <option value="SBD">SBD</option>
+                            <option value="SCR">SCR</option>
+                            <option value="SDD">SDD</option>
+                            <option value="SDG">SDG</option>
+                            <option value="SDP">SDP</option>
+                            <option value="SEK">SEK</option>
+                            <option value="SGD">SGD</option>
+                            <option value="SHP">SHP</option>
+                            <option value="SIT">SIT</option>
+                            <option value="SKK">SKK</option>
+                            <option value="SLL">SLL</option>
+                            <option value="SOS">SOS</option>
+                            <option value="SPL">SPL</option>
+                            <option value="SRD">SRD</option>
+                            <option value="SRG">SRG</option>
+                            <option value="STD">STD</option>
+                            <option value="SVC">SVC</option>
+                            <option value="SVP">SVP</option>
+                            <option value="SZL">SZL</option>
+                            <option value="THB">THB</option>
+                            <option value="TJS">TJS</option>
+                            <option value="TMM">TMM</option>
+                            <option value="TND">TND</option>
+                            <option value="TOP">TOP</option>
+                            <option value="TRL">TRL</option>
+                            <option value="TRY">TRY</option>
+                            <option value="TTD">TTD</option>
+                            <option value="TYD">TYD</option>
+                            <option value="TWD">TWD</option>
+                            <option value="TZS">TZS</option>
+                            <option value="UAH">UAH</option>
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="UYP">UYP</option>
+                            <option value="UYU">UYU</option>
+                            <option value="UZS">UZS</option>
+                            <option value="VAL">VAL</option>
+                            <option value="VEB">VEB</option>
+                            <option value="VEF">VEF</option>
+                            <option value="VND">VND</option>
+                            <option value="VUV">VUV</option>
+                            <option value="WST">WST</option>
+                            <option value="XAF">XAF</option>
+                            <option value="XAG">XAG</option>
+                            <option value="XAU">XAU</option>
+                            <option value="XCD">XCD</option>
+                            <option value="XDR">XDR</option>
+                            <option value="XEU">XEU</option>
+                            <option value="XOF">XOF</option>
+                            <option value="XPD">XPD</option>
+                            <option value="XPF">XPF</option>
+                            <option value="XPT">XPT</option>
+                            <option value="YER">YER</option>
+                            <option value="YUN">YUN</option>
+                            <option value="ZAR">ZAR</option>
+                            <option value="ZMK">ZMK</option>
+                            <option value="ZWD">ZWD</option>
+                        </select>
+
+                        Compared Currency:
+                        <select ng-model="comparedCur" class="resizedTextbox">
+                            <option value="ADF">ADF</option>
+                            <option value="ADP">ADP</option>
+                            <option value="AED">AED</option>
+                            <option value="AFA">AFA</option>
+                            <option value="AFN">AFN</option>
+                            <option value="AFR">AFR</option>
+                            <option value="ALL">ALL</option>
+                            <option value="AMD">AMD</option>
+                            <option value="ANG">ANG</option>
+                            <option value="AOA">AOA</option>
+                            <option value="AON">AON</option>
+                            <option value="ARS">ARS</option>
+                            <option value="ATS">ATS</option>
+                            <option value="AUD">AUD</option>
+                            <option value="AWF">AWF</option>
+                            <option value="AWG">AWG</option>
+                            <option value="AZM">AZM</option>
+                            <option value="AZN">AZN</option>
+                            <option value="BAM">BAM</option>
+                            <option value="BBD">BBD</option>
+                            <option value="BDT">BDT</option>
+                            <option value="BEF">BEF</option>
+                            <option value="BGL">BGL</option>
+                            <option value="BGN">BGN</option>
+                            <option value="BHD">BHD</option>
+                            <option value="BIF">BIF</option>
+                            <option value="BMD">BMD</option>
+                            <option value="BND">BND</option>
+                            <option value="BOB">BOB</option>
+                            <option value="BRL">BRL</option>
+                            <option value="BSD">BSD</option>
+                            <option value="BTN">BTN</option>
+                            <option value="BWP">BWP</option>
+                            <option value="BYR">BYR</option>
+                            <option value="BZD">BZD</option>
+                            <option value="CAD">CAD</option>
+                            <option value="CDF">CDF</option>
+                            <option value="CHF">CHF</option>
+                            <option value="CLP">CLP</option>
+                            <option value="CNY">CNY</option>
+                            <option value="COP">COP</option>
+                            <option value="CRS">CRS</option>
+                            <option value="CUC">CUC</option>
+                            <option value="CUP">CUP</option>
+                            <option value="CVE">CVE</option>
+                            <option value="CYP">CYP</option>
+                            <option value="CZK">CZK</option>
+                            <option value="DEM">DEM</option>
+                            <option value="DIF">DIF</option>
+                            <option value="DKK">DKK</option>
+                            <option value="DOP">DOP</option>
+                            <option value="DZF">DZF</option>
+                            <option value="ECS">ECS</option>
+                            <option value="EEK">EEK</option>
+                            <option value="EGP">EGP</option>
+                            <option value="ERN">ERN</option>
+                            <option value="ESP">ESP</option>
+                            <option value="ETD">ETD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="FIM">FIM</option>
+                            <option value="FJD">FJD</option>
+                            <option value="FKP">FKP</option>
+                            <option value="GBP">GBP</option>
+                            <option value="GEL">GEL</option>
+                            <option value="GGP">GGP</option>
+                            <option value="GHC">GHC</option>
+                            <option value="GHS">GHS</option>
+                            <option value="GIP">GIP</option>
+                            <option value="GMP">GMP</option>
+                            <option value="GNF">GNF</option>
+                            <option value="GRD">GRD</option>
+                            <option value="GTQ">GTQ</option>
+                            <option value="GYD">GYD</option>
+                            <option value="HKD">HKD</option>
+                            <option value="HNL">HNL</option>
+                            <option value="HRK">HRK</option>
+                            <option value="HTG">HTG</option>
+                            <option value="HUF">HUF</option>
+                            <option value="IDR">IDR</option>
+                            <option value="IEP">IEP</option>
+                            <option value="ILS">ILS</option>
+                            <option value="IMP">IMP</option>
+                            <option value="INR">INR</option>
+                            <option value="IQD">IQD</option>
+                            <option value="IRR">IRR</option>
+                            <option value="ISK">ISK</option>
+                            <option value="ITL">ITL</option>
+                            <option value="JEP">JEP</option>
+                            <option value="JMP">JMP</option>
+                            <option value="JOD">JOD</option>
+                            <option value="JPY">JPY</option>
+                            <option value="KES">KES</option>
+                            <option value="KGS">KGS</option>
+                            <option value="KHR">KHR</option>
+                            <option value="KMF">KMF</option>
+                            <option value="KPW">KPW</option>
+                            <option value="KRW">KRW</option>
+                            <option value="KWD">KWD</option>
+                            <option value="KYD">KYD</option>
+                            <option value="KZT">KZT</option>
+                            <option value="LAK">LAK</option>
+                            <option value="LBP">LBP</option>
+                            <option value="LKR">LKR</option>
+                            <option value="LRD">LRD</option>
+                            <option value="LSL">LSL</option>
+                            <option value="LTL">LTL</option>
+                            <option value="LUF">LUF</option>
+                            <option value="LVL">LVL</option>
+                            <option value="LYD">LYD</option>
+                            <option value="MAD">MAD</option>
+                            <option value="MDL">MDL</option>
+                            <option value="MGA">MGA</option>
+                            <option value="MGF">MGF</option>
+                            <option value="MKD">MKD</option>
+                            <option value="MMK">MMK</option>
+                            <option value="MNT">MNT</option>
+                            <option value="MOP">MOP</option>
+                            <option value="MRO">MRO</option>
+                            <option value="MTL">MTL</option>
+                            <option value="MUR">MUR</option>
+                            <option value="MVR">MVR</option>
+                            <option value="MWK">MWK</option>
+                            <option value="MXN">MXN</option>
+                            <option value="MYR">MYR</option>
+                            <option value="MZM">MZM</option>
+                            <option value="MZN">MZN</option>
+                            <option value="NAD">NAD</option>
+                            <option value="NGN">NGN</option>
+                            <option value="NIO">NIO</option>
+                            <option value="NLG">NLG</option>
+                            <option value="NOK">NOK</option>
+                            <option value="NPR">NPR</option>
+                            <option value="NTD">NTD</option>
+                            <option value="NZD">NZD</option>
+                            <option value="OMR">OMR</option>
+                            <option value="PAB">PAB</option>
+                            <option value="PEN">PEN</option>
+                            <option value="PGK">PGK</option>
+                            <option value="PHP">PHP</option>
+                            <option value="PKR">PKR</option>
+                            <option value="PLN">PLN</option>
+                            <option value="PSL">PSL</option>
+                            <option value="PTE">PTE</option>
+                            <option value="PYG">PYG</option>
+                            <option value="QAR">QAR</option>
+                            <option value="ROL">ROL</option>
+                            <option value="RON">RON</option>
+                            <option value="RSD">RSD</option>
+                            <option value="RUB">RUB</option>
+                            <option value="RWF">RWF</option>
+                            <option value="SAR">SAR</option>
+                            <option value="SBD">SBD</option>
+                            <option value="SCR">SCR</option>
+                            <option value="SDD">SDD</option>
+                            <option value="SDG">SDG</option>
+                            <option value="SDP">SDP</option>
+                            <option value="SEK">SEK</option>
+                            <option value="SGD">SGD</option>
+                            <option value="SHP">SHP</option>
+                            <option value="SIT">SIT</option>
+                            <option value="SKK">SKK</option>
+                            <option value="SLL">SLL</option>
+                            <option value="SOS">SOS</option>
+                            <option value="SPL">SPL</option>
+                            <option value="SRD">SRD</option>
+                            <option value="SRG">SRG</option>
+                            <option value="STD">STD</option>
+                            <option value="SVC">SVC</option>
+                            <option value="SVP">SVP</option>
+                            <option value="SZL">SZL</option>
+                            <option value="THB">THB</option>
+                            <option value="TJS">TJS</option>
+                            <option value="TMM">TMM</option>
+                            <option value="TND">TND</option>
+                            <option value="TOP">TOP</option>
+                            <option value="TRL">TRL</option>
+                            <option value="TRY">TRY</option>
+                            <option value="TTD">TTD</option>
+                            <option value="TYD">TYD</option>
+                            <option value="TWD">TWD</option>
+                            <option value="TZS">TZS</option>
+                            <option value="UAH">UAH</option>
+                            <option value="UGX">UGX</option>
+                            <option value="USD">USD</option>
+                            <option value="UYP">UYP</option>
+                            <option value="UYU">UYU</option>
+                            <option value="UZS">UZS</option>
+                            <option value="VAL">VAL</option>
+                            <option value="VEB">VEB</option>
+                            <option value="VEF">VEF</option>
+                            <option value="VND">VND</option>
+                            <option value="VUV">VUV</option>
+                            <option value="WST">WST</option>
+                            <option value="XAF">XAF</option>
+                            <option value="XAG">XAG</option>
+                            <option value="XAU">XAU</option>
+                            <option value="XCD">XCD</option>
+                            <option value="XDR">XDR</option>
+                            <option value="XEU">XEU</option>
+                            <option value="XOF">XOF</option>
+                            <option value="XPD">XPD</option>
+                            <option value="XPF">XPF</option>
+                            <option value="XPT">XPT</option>
+                            <option value="YER">YER</option>
+                            <option value="YUN">YUN</option>
+                            <option value="ZAR">ZAR</option>
+                            <option value="ZMK">ZMK</option>
+                            <option value="ZWD">ZWD</option>
+                        </select>
+
+
+                        <div>
+                            <br />
+                            Start Date <input ng-model="start" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+                            End Date <input ng-model="end" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+                        </div>
+                        <br />
+                        Frequency:
+                        <select ng-model="freq" class="resizedTextbox">
+                            <option value="0">Daily</option>
+                            <option value="1">Monthly</option>
+                            <option value="2">Yearly</option>
+                        </select>
+                        <br />
+                        <p>
+                            <br />
+                            <button ng-click="search()" class="button" style="width: 150px; height: 35px">Search</button>
+                        </p>
+                    </div>
+
+                    <div ng-show="staterreurs" class="inputError">
+                        Erreur: {{erreurs}}
+                    </div>
+
+                    <div ng-show="status">
+                        <p class="warning">Warning:</p>
+                        <div ng-repeat="war in data.warning ">
+                            {{war}}
+                        </div>
+                        <p class="errrors">Erreur:</p>
+                        <div ng-repeat="err in data.listeErreur ">
+                            {{err}}
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Exchange Rate</th>
+                                <th>Date</th>
+                                <th>Value</th>
+                                
+                            </tr>
+                            <tr ng-repeat="x in data.data.Ds.Table1">
+                                <td>{{compString|uppercase}}</td>
+                                <td>{{ x.Date |date:'yyyy-MM-dd' }}</td>
+                                <td>{{x.EUR/USD}}</td>
+
+                            </tr>
+                        </table>
+
+                        <a download="ExchangeRate.json" ng-href="{{ url }}">Télécharger les données au format Json</a>
+                    </div>
+            </div>
+                </div>
+
+
+
+
+
+            <div ng-controller="InterestController">
+                <div ng-show="menu.i">
+                    <h2>{{menu.res}}</h2>
+                    <div id="stock">
+                        <br /><br />
+                        Interest Rate:
+                        <select ng-model="name" class="resizedTextbox">
+                            <option value="EURIBOR">EURIBOR</option>
+                            <option value="EONIA">EONIA</option>
+                            <option value="EUREPO">EUREPO</option>
+                        </select>
+                        <div>
+                            <br />
+                            Start Date <input ng-model="start" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+
+                            End Date <input ng-model="end" type="text" placeholder="yyyy-MM-dd" class="resizedTextbox">
+
+                        </div>
+                        <p>
+                            <br />
+                            <button ng-click="search()" class="button" style="width: 150px; height: 35px">Search</button>
+                        </p>
+                    </div>
+                    <div ng-show="staterreurs" class="inputError">
+                        Erreur: {{erreurs}}
+                    </div>
+                    <div ng-show="statusnormal">
+                        <p class="warning">Warning:</p>
+                        <div ng-repeat="war in data.warning ">
+                            {{war}}
+                        </div>
+                        <p class="errrors">Erreur:</p>
+                        <div ng-repeat="err in data.listeErreur ">
+                            {{err}}
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Interest Rate</th>
+                                <th>Date</th>
+                                <th>1 Week</th>
+                                <th>2 Week</th>
+                                <th>1 Month</th>
+                                <th>2 Month</th>
+                                <th>3 Month</th>
+                                <th>6 Month</th>
+                                <th>9 Month</th>
+                                <th>1 Year</th>
+                            </tr>
+                            <tr ng-repeat="x in data.data.Ds.Table1">
+                                <td>{{ x.Symbol }}</td>
+                                <td>{{ x.Date |date:'yyyy-MM-dd' }}</td>
+                                <td>{{ x.1w }}</td>
+                                <td>{{ x.2w }}</td>
+                                <td>{{ x.1m }}</td>
+                                <td>{{ x.2m }}</td>
+                                <td>{{ x.3m }}</td>
+                                <td>{{ x.6m }}</td>
+                                <td>{{ x.9m }}</td>
+                                <td>{{ x.12m }}</td>
+                            </tr>
+                        </table>
+                        <a download="InterestRate.json" ng-href="{{ url }}">Télécharger les données au format Json</a>
+                        </div>
+                    <div ng-show="statuseonia">
+                        <p class="warning">Warning:</p>
+                        <div ng-repeat="war in data.warning ">
+                            {{war}}
+                        </div>
+                        <p class="errrors">Erreur:</p>
+                        <div ng-repeat="err in data.listeErreur ">
+                            {{err}}
+                        </div>
+                        <table>
+                            <tr>
+                                <th>Taux</th>
+                                <th>Date</th>
+                                <th>1 Day</th>
+                            </tr>
+                            <tr ng-repeat="x in data.data.Ds.Table1">
+                                <td>{{ x.Symbol }}</td>
+                                <td>{{ x.Date |date:'yyyy-MM-dd' }}</td>
+                                <td>{{ x.EONIA }}</td>
+                                
+                            </tr>
+                        </table>
+                        <a download="Asset.json" ng-href="{{ url }}">Télécharger les données au format Json</a>
+                    </div>
+                    </div>
+            </div>
+
+
+            <div ng-controller="XmlController">
+                <div ng-show="menu.x">
+                    <div>
+                        <form enctype="multipart/form-data" method="post" action="/files" id="ajaxUploadForm" novalidate="novalidate">
+
+                            <fieldset>
+                                <legend>Upload Form</legend>
+                                <ol>
+                                    
+                                    <li>
+                                        <label>Upload </label>
+                                        <input type="file" style="width:317px" name="file" id="fileInput">
+                                    </li>
+                                    <li>
+                                        <input type="submit" value="Upload" id="ajaxUploadButton" class="btn">
+                                    </li>
+                                </ol>
+                            </fieldset>
+                        </form>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

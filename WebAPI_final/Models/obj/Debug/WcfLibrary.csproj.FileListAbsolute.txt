@@ -1,0 +1,5 @@
+C:\Users\Alexandre\Desktop\projet\projet_specialite\xdatafi\webservice\WcfLibrary\bin\Debug\WcfLibrary.dll
+C:\Users\Alexandre\Desktop\projet\projet_specialite\xdatafi\webservice\WcfLibrary\bin\Debug\WcfLibrary.pdb
+C:\Users\Alexandre\Desktop\projet\projet_specialite\xdatafi\webservice\WcfLibrary\obj\Debug\WcfLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Alexandre\Desktop\projet\projet_specialite\xdatafi\webservice\WcfLibrary\obj\Debug\WcfLibrary.dll
+C:\Users\Alexandre\Desktop\projet\projet_specialite\xdatafi\webservice\WcfLibrary\obj\Debug\WcfLibrary.pdb
