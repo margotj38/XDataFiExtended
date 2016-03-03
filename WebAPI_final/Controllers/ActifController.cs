@@ -102,7 +102,12 @@ namespace WebAPI_final.Controllers
             var model = JsonMapper._download_serialized_json_data<RootObject>(url);
             Data data = new Data();
             DataSet dataSet = new DataSet();
-            dataSet.Tables.Add(model.list.resources[0].resource.fields.price);
+            DataTable dt = new DataTable();
+            DataColumn[] dataColumns = new DataColumn[1];
+            dataColumns[0] = new DataColumn("Price", System.Type.GetType("System.String"));
+            dt.Columns.Add(dataColumns[0]);
+            dt.Rows.Add(model.list.resources[0].resource.fields.price);
+            dataSet.Tables.Add(dt);
             data.set(dataSet, new List<string>(), new List<string>(), DateTime.Now, DateTime.Now, Data.TypeData.RealTime);
             donnees.SetData(data);
             return donnees;
