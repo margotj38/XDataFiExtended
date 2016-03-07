@@ -1885,7 +1885,8 @@ namespace WebAPI_final.Models.GestionErreurs
                     #region si un seul titre
                     // si absence de données sur plus de 1 jour ouvré 
                     // date1 > date2 car dates décroissantes
-                    if ((GestionSimulation.AddBusinessDays(date2, 2) < date1))
+                    //if ((GestionSimulation.AddBusinessDays(date2, 2) < date1))
+                    if (1 != 2)
                     {
                         double volatilite = 0;
                         // Pour les simulations, on veut avoir une simulation cohérente
