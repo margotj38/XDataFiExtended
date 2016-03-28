@@ -187,6 +187,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Data\DataExchangeRateQuandl.cs" />
     <Compile Include="Models\Data\DataRealTime.cs" />
     <Compile Include="Models\FileResult.cs" />
     <Compile Include="Models\ValidateMimeMultipartContentFilter.cs" />

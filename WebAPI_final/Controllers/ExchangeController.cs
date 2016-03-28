@@ -66,6 +66,53 @@ namespace WebAPI_final.Controllers
             return donnees;
         }
 
+        [Route("exchange/{d1:datetime}/{d2:datetime}/{nameBasis}/{nameComp}")]
+        public DataRetour GetExchange(DateTime d1, DateTime d2, String nameBasis, String nameComp)
+        {
+            string url = "";
+            if (String.Compare(nameBasis, "eur", true) == 0)
+            {
+                // Forme : https://www.quandl.com/api/v3/datasets/ECB/EURusd.json?order=asc&start_date=2015-1-1&end_date=2015-1-7&api_key=x6CXEY-CbpkQgQtJQegS
+                url += "https://www.quandl.com/api/v3/datasets/ECB/EUR" + nameComp + ".json?order=asc&api_key=x6CXEY-CbpkQgQtJQegS";
+            }
+            else if (String.Compare(nameBasis, "usd", true) == 0)
+            {
+                if (String.Compare(nameComp, "eur", true) == 0)
+                    nameComp = "eu";
+                else if (String.Compare(nameComp, "aud", true) == 0)
+                    nameComp = "al";
+                // Forme : https://www.quandl.com/api/v3/datasets/FED/RXI_US_N_B_AL.json?order=asc&start_date=2015-1-1&end_date=2015-1-7
+                url += "https://www.quandl.com/api/v3/datasets/FED/RXI_US_N_B_" + nameComp + ".json?order=asc&api_key=x6CXEY-CbpkQgQtJQegS";
+            }
+            else
+            {
+                return new DataRetour();
+            }
+            
+            url += "&start_date=" + d1.Year + "-" + d1.Month + "-" + d1.Day;
+            url += "&end_date=" + d2.Year + "-" + d2.Month + "-" + d2.Day;
+            var model = JsonMapper._download_serialized_json_data<ExchangeRateRootObject>(url);
+            Data data = new Data();
+            DataSet dataSet = new DataSet();
+            DataTable dt = new DataTable();
+            DataColumn[] dataColumns = new DataColumn[2];
+            dataColumns[0] = new DataColumn("Date", System.Type.GetType("System.String"));
+            dataColumns[1] = new DataColumn("Price", System.Type.GetType("System.String"));
+            dt.Columns.Add(dataColumns[0]);
+            dt.Columns.Add(dataColumns[1]);
+            foreach (List<string> dateValue in model.dataset.data)
+            {
+                DataRow dataRow = dt.NewRow();
+                dataRow["Date"] = dateValue[0];
+                dataRow["Price"] = dateValue[1];
+                dt.Rows.Add(dataRow);
+            }
+            dataSet.Tables.Add(dt);
+            data.set(dataSet, new List<string>(), new List<string>(), d1, d2, Data.TypeData.ExchangeRate);
+            donnees.SetData(data);
+            return donnees;
+        }
+
         [Route("exchange/realtime/{nameBasis}/{namesComp}")]
         public DataRetour GetExchange(String nameBasis, String namesComp)
         {
